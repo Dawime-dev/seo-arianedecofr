@@ -54,7 +54,7 @@
   }
 
   .article-content ol {
-    @apply list-none mb-6 space-y-2 counter-reset-none;
+    @apply list-none mb-6 space-y-2;
     counter-reset: article-counter;
   }
 

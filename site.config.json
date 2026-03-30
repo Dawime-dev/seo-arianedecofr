@@ -1,0 +1,30 @@
+{
+    "name": "BétonBrut Maison",
+    "description": "BétonBrut Maison : conseils déco, bricolage et aménagement intérieur sans détour. L'essentiel, rien de superflu.",
+    "url": "https:\/\/arianedeco.fr",
+    "primaryColor": "#1A1A1A",
+    "categories": [
+        {
+            "name": "Décoration Intérieure",
+            "slug": "decoration-interieure",
+            "description": "Idées brutes et percutantes pour transformer vos intérieurs. Styles, tendances et conseils déco sans compromis."
+        },
+        {
+            "name": "Bricolage & Travaux",
+            "slug": "bricolage-travaux",
+            "description": "Guides techniques directs pour vos travaux maison. Outils, méthodes et projets DIY expliqués sans détour."
+        },
+        {
+            "name": "Aménagement & Rangement",
+            "slug": "amenagement-rangement",
+            "description": "Solutions d'aménagement efficaces et radicales pour optimiser chaque mètre carré de votre logement."
+        },
+        {
+            "name": "Jardin & Extérieur",
+            "slug": "jardin-exterieur",
+            "description": "Aménagez vos espaces extérieurs avec impact. Terrasses, jardins et façades traités avec franchise et expertise."
+        }
+    ],
+    "locale": "fr",
+    "niche": "Maison, décoration, bricolage"
+}

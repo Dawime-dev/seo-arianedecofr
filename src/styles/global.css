@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+@layer base {
+  :root {
+    --color-primary: #1A1A1A;
+    --color-accent: #E8FF00;
+    --color-surface: #F5F5F0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-[#F5F5F0] text-[#1A1A1A] font-sans antialiased;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Mono', monospace;
+    @apply font-bold tracking-tight leading-tight;
+  }
+
+  /* Article typography */
+  .article-content h2 {
+    @apply text-2xl md:text-3xl font-bold mt-10 mb-4 pb-2 border-b-4 border-[#1A1A1A];
+    font-family: 'Space Mono', monospace;
+  }
+
+  .article-content h3 {
+    @apply text-xl md:text-2xl font-bold mt-8 mb-3;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .article-content p {
+    @apply text-base md:text-lg leading-relaxed mb-5 text-[#2a2a2a];
+  }
+
+  .article-content ul {
+    @apply list-none mb-6 space-y-2;
+  }
+
+  .article-content ul li {
+    @apply pl-5 relative text-base md:text-lg leading-relaxed;
+  }
+
+  .article-content ul li::before {
+    content: '▸';
+    @apply absolute left-0 text-[#1A1A1A] font-bold;
+  }
+
+  .article-content ol {
+    @apply list-none mb-6 space-y-2 counter-reset-none;
+    counter-reset: article-counter;
+  }
+
+  .article-content ol li {
+    @apply pl-8 relative text-base md:text-lg leading-relaxed;
+    counter-increment: article-counter;
+  }
+
+  .article-content ol li::before {
+    content: counter(article-counter) ".";
+    @apply absolute left-0 font-bold text-[#1A1A1A];
+    font-family: 'Space Mono', monospace;
+  }
+
+  .article-content a {
+    @apply underline decoration-2 underline-offset-2 decoration-[#1A1A1A] hover:bg-[#E8FF00] transition-colors duration-150;
+  }
+
+  .article-content blockquote {
+    @apply border-l-4 border-[#1A1A1A] bg-[#1A1A1A] text-[#F5F5F0] px-6 py-5 my-8 text-lg font-medium;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .article-content blockquote p {
+    @apply text-[#F5F5F0] mb-0;
+  }
+
+  .article-content strong {
+    @apply font-bold;
+  }
+
+  .article-content em {
+    @apply italic;
+  }
+
+  .article-content img {
+    @apply w-full border-4 border-[#1A1A1A] my-8;
+  }
+
+  .article-content pre {
+    @apply bg-[#1A1A1A] text-[#E8FF00] p-5 my-6 overflow-x-auto border-4 border-[#1A1A1A];
+    font-family: 'Space Mono', monospace;
+  }
+
+  .article-content code {
+    @apply bg-[#1A1A1A] text-[#E8FF00] px-1.5 py-0.5 text-sm;
+    font-family: 'Space Mono', monospace;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  ::selection {
+    background-color: #E8FF00;
+    color: #1A1A1A;
+  }
+}
+
+@layer utilities {
+  .brutalist-border {
+    @apply border-4 border-[#1A1A1A];
+  }
+
+  .brutalist-shadow {
+    box-shadow: 6px 6px 0px #1A1A1A;
+  }
+
+  .brutalist-shadow-hover {
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+  }
+
+  .brutalist-shadow-hover:hover {
+    box-shadow: 3px 3px 0px #1A1A1A;
+    transform: translate(3px, 3px);
+  }
+
+  .font-mono-custom {
+    font-family: 'Space Mono', monospace;
+  }
+}

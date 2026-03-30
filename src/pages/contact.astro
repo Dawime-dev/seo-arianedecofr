@@ -1,0 +1,254 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import config from '../../site.config.json';
+---
+
+<BaseLayout
+  title={`Contact — ${config.name}`}
+  description="Une question, une suggestion ou une proposition de partenariat ? Contactez l'équipe BétonBrut Maison directement via ce formulaire. Réponse garantie sous 48h."
+  type="website"
+>
+
+  <!-- Hero brutal -->
+  <section class="bg-black text-white border-b-4 border-yellow-400 py-16 px-4">
+    <div class="max-w-4xl mx-auto">
+      <p class="font-mono text-yellow-400 text-sm uppercase tracking-widest mb-4">// contact</p>
+      <h1 class="font-mono text-4xl md:text-6xl font-bold uppercase leading-none mb-6">
+        Parlons<br />
+        <span class="text-yellow-400">Brut.</span>
+      </h1>
+      <p class="text-gray-300 text-lg md:text-xl max-w-2xl leading-relaxed">
+        Pas de chatbot, pas de formulaire qui disparaît dans le vide. Ici, vos messages arrivent directement à une vraie personne qui lit tout et répond à tout — sous 48h maximum.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contenu principal -->
+  <section class="bg-white py-16 px-4">
+    <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+
+      <!-- Colonne gauche : texte -->
+      <div>
+        <h2 class="font-mono text-2xl font-bold uppercase border-b-4 border-black pb-3 mb-8">
+          Pourquoi nous écrire ?
+        </h2>
+
+        <div class="mb-8">
+          <h3 class="font-mono text-lg font-bold uppercase mb-3 flex items-center gap-2">
+            <span class="bg-yellow-400 text-black px-2 py-0 text-xs">01</span>
+            Questions & Conseils
+          </h3>
+          <p class="text-gray-700 leading-relaxed">
+            Vous avez lu un de nos articles sur le béton ciré, l'enduit minéral ou la pose d'un carrelage XL et vous avez une question spécifique à votre projet ? Décrivez-nous votre situation : surface, budget, contraintes techniques. On vous répond sans jargon inutile et sans vous vendre quoi que ce soit.
+          </p>
+        </div>
+
+        <div class="mb-8">
+          <h3 class="font-mono text-lg font-bold uppercase mb-3 flex items-center gap-2">
+            <span class="bg-yellow-400 text-black px-2 py-0 text-xs">02</span>
+            Suggestions de contenu
+          </h3>
+          <p class="text-gray-700 leading-relaxed">
+            BétonBrut Maison existe d'abord pour vous. Si un sujet vous manque — technique de ragréage, choix des matières brutes pour une cuisine, tuto enduit béton en appartement — dites-le nous. Vos demandes alimentent directement notre calendrier éditorial. Les meilleurs articles naissent de vraies questions de vrais lecteurs.
+          </p>
+        </div>
+
+        <div class="mb-8">
+          <h3 class="font-mono text-lg font-bold uppercase mb-3 flex items-center gap-2">
+            <span class="bg-yellow-400 text-black px-2 py-0 text-xs">03</span>
+            Partenariats & Collaborations
+          </h3>
+          <p class="text-gray-700 leading-relaxed">
+            Vous représentez une marque de matériaux, d'outillage ou de décoration brute et vous souhaitez collaborer ? On est ouverts aux partenariats sérieux, aux tests produits et aux articles sponsorisés — à condition que ça serve réellement nos lecteurs. Aucun contenu publicitaire déguisé, tout est indiqué clairement. Présentez votre projet sans intermédiaire.
+          </p>
+        </div>
+
+        <div class="mb-8">
+          <h3 class="font-mono text-lg font-bold uppercase mb-3 flex items-center gap-2">
+            <span class="bg-yellow-400 text-black px-2 py-0 text-xs">04</span>
+            Signaler une erreur
+          </h3>
+          <p class="text-gray-700 leading-relaxed">
+            Un prix mal indiqué, un lien cassé, une information technique inexacte ? La rigueur technique est notre priorité. Signalez-nous toute coquille ou erreur factuelle — nous corrigeons dans les 24h et on vous en remercie sincèrement.
+          </p>
+        </div>
+
+        <!-- Encadré temps de réponse -->
+        <div class="border-4 border-black bg-yellow-400 p-6">
+          <p class="font-mono text-black font-bold text-sm uppercase tracking-wide mb-1">Délai de réponse</p>
+          <p class="font-mono text-black text-3xl font-bold">≤ 48h</p>
+          <p class="text-black text-sm mt-2">Du lundi au vendredi. On ne laisse pas les messages sans réponse.</p>
+        </div>
+      </div>
+
+      <!-- Colonne droite : formulaire -->
+      <div>
+        <h2 class="font-mono text-2xl font-bold uppercase border-b-4 border-black pb-3 mb-8">
+          Envoyer un message
+        </h2>
+
+        <form
+          name="contact"
+          method="POST"
+          action="/merci"
+          class="space-y-6"
+          novalidate
+        >
+          <!-- Honeypot anti-spam -->
+          <input type="hidden" name="form-name" value="contact" />
+          <div class="hidden" aria-hidden="true">
+            <input name="bot-field" />
+          </div>
+
+          <!-- Nom -->
+          <div>
+            <label for="nom" class="font-mono text-sm font-bold uppercase tracking-wide block mb-2">
+              Nom complet <span class="text-red-600">*</span>
+            </label>
+            <input
+              type="text"
+              id="nom"
+              name="nom"
+              required
+              placeholder="Marie Dupont"
+              class="w-full border-2 border-black px-4 py-3 font-mono text-sm bg-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 placeholder-gray-400 transition-colors"
+            />
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label for="email" class="font-mono text-sm font-bold uppercase tracking-wide block mb-2">
+              Adresse e-mail <span class="text-red-600">*</span>
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              placeholder="marie@exemple.fr"
+              class="w-full border-2 border-black px-4 py-3 font-mono text-sm bg-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 placeholder-gray-400 transition-colors"
+            />
+          </div>
+
+          <!-- Sujet -->
+          <div>
+            <label for="sujet" class="font-mono text-sm font-bold uppercase tracking-wide block mb-2">
+              Sujet <span class="text-red-600">*</span>
+            </label>
+            <select
+              id="sujet"
+              name="sujet"
+              required
+              class="w-full border-2 border-black px-4 py-3 font-mono text-sm bg-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition-colors appearance-none cursor-pointer"
+            >
+              <option value="" disabled selected>Choisissez un sujet</option>
+              <option value="question">Question technique</option>
+              <option value="suggestion">Suggestion d'article</option>
+              <option value="partenariat">Partenariat / Collaboration</option>
+              <option value="erreur">Signaler une erreur</option>
+              <option value="autre">Autre</option>
+            </select>
+          </div>
+
+          <!-- Message -->
+          <div>
+            <label for="message" class="font-mono text-sm font-bold uppercase tracking-wide block mb-2">
+              Message <span class="text-red-600">*</span>
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              required
+              rows="7"
+              placeholder="Décrivez votre demande avec le plus de détails possible..."
+              class="w-full border-2 border-black px-4 py-3 font-mono text-sm bg-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 placeholder-gray-400 transition-colors resize-none"
+            ></textarea>
+          </div>
+
+          <!-- Consentement -->
+          <div class="flex items-start gap-3">
+            <input
+              type="checkbox"
+              id="rgpd"
+              name="rgpd"
+              required
+              class="mt-1 w-5 h-5 border-2 border-black accent-yellow-400 cursor-pointer flex-shrink-0"
+            />
+            <label for="rgpd" class="text-sm text-gray-600 leading-relaxed">
+              J'accepte que mes données soient utilisées uniquement pour répondre à ma demande, conformément à notre
+              <a href="/confidentialite" class="underline font-bold text-black hover:text-yellow-500 transition-colors">politique de confidentialité</a>.
+            </label>
+          </div>
+
+          <!-- Bouton -->
+          <button
+            type="submit"
+            class="w-full bg-black text-white font-mono font-bold text-sm uppercase tracking-widest py-4 px-8 border-4 border-black hover:bg-yellow-400 hover:text-black transition-colors duration-150 focus:outline-none focus:ring-4 focus:ring-yellow-400"
+          >
+            Envoyer le message →
+          </button>
+
+          <p class="font-mono text-xs text-gray-500 text-center">
+            Champs marqués <span class="text-red-600 font-bold">*</span> obligatoires
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section infos complémentaires -->
+  <section class="bg-gray-100 border-t-4 border-black py-12 px-4">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="font-mono text-xl font-bold uppercase border-b-4 border-black pb-3 mb-8">
+        Avant d'écrire
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div class="bg-white border-2 border-black p-6">
+          <p class="font-mono text-yellow-600 text-xs uppercase tracking-widest mb-2">// FAQ</p>
+          <h3 class="font-mono font-bold uppercase mb-3">Consulter la FAQ</h3>
+          <p class="text-sm text-gray-600 leading-relaxed mb-4">
+            Votre question a peut-être déjà une réponse détaillée dans nos guides techniques.
+          </p>
+          <a href="/faq" class="font-mono text-xs font-bold uppercase border-2 border-black px-4 py-2 hover:bg-black hover:text-white transition-colors inline-block">
+            Voir les guides →
+          </a>
+        </div>
+        <div class="bg-white border-2 border-black p-6">
+          <p class="font-mono text-yellow-600 text-xs uppercase tracking-widest mb-2">// RECHERCHE</p>
+          <h3 class="font-mono font-bold uppercase mb-3">Chercher un article</h3>
+          <p class="text-sm text-gray-600 leading-relaxed mb-4">
+            Des centaines de tutoriels et conseils déco sont déjà disponibles sur le site.
+          </p>
+          <a href="/blog" class="font-mono text-xs font-bold uppercase border-2 border-black px-4 py-2 hover:bg-black hover:text-white transition-colors inline-block">
+            Parcourir le blog →
+          </a>
+        </div>
+        <div class="bg-white border-2 border-black p-6">
+          <p class="font-mono text-yellow-600 text-xs uppercase tracking-widest mb-2">// À PROPOS</p>
+          <h3 class="font-mono font-bold uppercase mb-3">Qui sommes-nous ?</h3>
+          <p class="text-sm text-gray-600 leading-relaxed mb-4">
+            Découvrez la philosophie et les engagements éditoriaux de BétonBrut Maison.
+          </p>
+          <a href="/a-propos" class="font-mono text-xs font-bold uppercase border-2 border-black px-4 py-2 hover:bg-black hover:text-white transition-colors inline-block">
+            Notre histoire →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": `Contact — ${config.name}`,
+    "description": "Page de contact de BétonBrut Maison. Questions, suggestions ou partenariats.",
+    "url": `${config.url}/contact`,
+    "publisher": {
+      "@type": "Organization",
+      "name": config.name,
+      "url": config.url
+    }
+  })} />
+
+</BaseLayout>

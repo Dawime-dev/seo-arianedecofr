@@ -1,0 +1,94 @@
+---
+import siteConfig from '../../site.config.json';
+
+const year = new Date().getFullYear();
+const categories = siteConfig.categories;
+
+const categoryLabels: Record<string, string> = {
+  'decoration-interieure': 'Déco',
+  'bricolage-travaux': 'Bricolage',
+  'amenagement-rangement': 'Rangement',
+  'jardin-exterieur': 'Jardin',
+};
+---
+
+<footer class="bg-[#1A1A1A] border-t-4 border-[#E8FF00] mt-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
+      <!-- Brand -->
+      <div>
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-9 h-9 bg-[#E8FF00] flex items-center justify-center">
+            <span class="text-[#1A1A1A] font-bold text-sm" style="font-family: 'Space Mono', monospace;">BB</span>
+          </div>
+          <span class="text-white font-bold text-xl" style="font-family: 'Space Mono', monospace;">
+            BétonBrut<span class="text-[#E8FF00]">.</span>
+          </span>
+        </div>
+        <p class="text-gray-400 text-sm leading-relaxed mb-4">
+          {siteConfig.description}
+        </p>
+        <p class="text-[#E8FF00] text-xs font-bold uppercase tracking-widest" style="font-family: 'Space Mono', monospace;">Maison · Déco · Bricolage</p>
+      </div>
+
+      <!-- Categories -->
+      <div>
+        <h3 class="text-[#E8FF00] font-bold text-sm uppercase tracking-widest mb-5 pb-2 border-b-2 border-[#E8FF00]" style="font-family: 'Space Mono', monospace;">Catégories</h3>
+        <ul class="space-y-2">
+          {categories.map((cat) => (
+            <li>
+              <a
+                href={`/categorie/${cat.slug}`}
+                class="text-gray-300 hover:text-[#E8FF00] text-sm font-medium transition-colors duration-150 flex items-center gap-2"
+              >
+                <span class="text-[#E8FF00] text-xs">▸</span>
+                {categoryLabels[cat.slug] || cat.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Pages -->
+      <div>
+        <h3 class="text-[#E8FF00] font-bold text-sm uppercase tracking-widest mb-5 pb-2 border-b-2 border-[#E8FF00]" style="font-family: 'Space Mono', monospace;">Le site</h3>
+        <ul class="space-y-2">
+          <li>
+            <a href="/" class="text-gray-300 hover:text-[#E8FF00] text-sm font-medium transition-colors duration-150 flex items-center gap-2">
+              <span class="text-[#E8FF00] text-xs">▸</span>
+              Accueil
+            </a>
+          </li>
+          <li>
+            <a href="/contact" class="text-gray-300 hover:text-[#E8FF00] text-sm font-medium transition-colors duration-150 flex items-center gap-2">
+              <span class="text-[#E8FF00] text-xs">▸</span>
+              Contact
+            </a>
+          </li>
+          <li>
+            <a href="/mentions-legales" class="text-gray-300 hover:text-[#E8FF00] text-sm font-medium transition-colors duration-150 flex items-center gap-2">
+              <span class="text-[#E8FF00] text-xs">▸</span>
+              Mentions légales
+            </a>
+          </li>
+          <li>
+            <a href="/politique-confidentialite" class="text-gray-300 hover:text-[#E8FF00] text-sm font-medium transition-colors duration-150 flex items-center gap-2">
+              <span class="text-[#E8FF00] text-xs">▸</span>
+              Confidentialité
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="border-t-2 border-gray-800 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
+      <p class="text-gray-500 text-xs" style="font-family: 'Space Mono', monospace;">
+        &copy; {year} {siteConfig.name}. Tous droits réservés.
+      </p>
+      <p class="text-gray-600 text-xs">
+        <span class="text-[#E8FF00]">{siteConfig.url.replace('https://', '')}</span>
+      </p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,132 @@
+---
+import siteConfig from '../../site.config.json';
+
+const categories = siteConfig.categories;
+
+const categoryLabels: Record<string, string> = {
+  'decoration-interieure': 'Déco',
+  'bricolage-travaux': 'Bricolage',
+  'amenagement-rangement': 'Rangement',
+  'jardin-exterieur': 'Jardin',
+};
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-50 bg-[#1A1A1A] border-b-4 border-[#1A1A1A]">
+  <!-- Top bar -->
+  <div class="bg-[#E8FF00] border-b-4 border-[#1A1A1A] py-1 px-4 text-center">
+    <p class="text-[#1A1A1A] text-xs font-bold tracking-widest uppercase" style="font-family: 'Space Mono', monospace;">La maison, sans filtre. Des conseils bruts, des idées qui claquent.</p>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-2 group flex-shrink-0">
+        <div class="w-9 h-9 bg-[#E8FF00] border-2 border-[#E8FF00] flex items-center justify-center">
+          <span class="text-[#1A1A1A] font-bold text-sm" style="font-family: 'Space Mono', monospace;">BB</span>
+        </div>
+        <span class="text-white font-bold text-lg leading-tight hidden sm:block" style="font-family: 'Space Mono', monospace;">
+          BétonBrut<span class="text-[#E8FF00]">.</span>
+        </span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden lg:flex items-center gap-1" aria-label="Navigation principale">
+        {categories.map((cat) => (
+          <a
+            href={`/categorie/${cat.slug}`}
+            class={`px-3 py-2 text-sm font-bold uppercase tracking-wide transition-colors duration-150 border-2 ${
+              currentPath.includes(cat.slug)
+                ? 'bg-[#E8FF00] text-[#1A1A1A] border-[#E8FF00]'
+                : 'text-white border-transparent hover:bg-white hover:text-[#1A1A1A] hover:border-white'
+            }`}
+            style="font-family: 'Space Mono', monospace;"
+          >
+            {categoryLabels[cat.slug] || cat.name}
+          </a>
+        ))}
+        <div class="w-px h-6 bg-gray-600 mx-2"></div>
+        <a
+          href="/contact"
+          class={`px-3 py-2 text-sm font-bold uppercase tracking-wide transition-colors duration-150 border-2 ${
+            currentPath === '/contact'
+              ? 'bg-[#E8FF00] text-[#1A1A1A] border-[#E8FF00]'
+              : 'text-white border-transparent hover:bg-white hover:text-[#1A1A1A] hover:border-white'
+          }`}
+          style="font-family: 'Space Mono', monospace;"
+        >
+          Contact
+        </a>
+      </nav>
+
+      <!-- Mobile menu button -->
+      <button
+        id="menu-toggle"
+        class="lg:hidden text-white p-2 border-2 border-white hover:bg-white hover:text-[#1A1A1A] transition-colors"
+        aria-label="Ouvrir le menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <svg id="icon-open" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="hidden lg:hidden bg-[#1A1A1A] border-t-4 border-[#E8FF00]"
+    role="navigation"
+    aria-label="Menu mobile"
+  >
+    <div class="px-4 py-4 space-y-1">
+      {categories.map((cat) => (
+        <a
+          href={`/categorie/${cat.slug}`}
+          class={`block px-4 py-3 text-sm font-bold uppercase tracking-wide border-2 transition-colors ${
+            currentPath.includes(cat.slug)
+              ? 'bg-[#E8FF00] text-[#1A1A1A] border-[#E8FF00]'
+              : 'text-white border-transparent hover:border-white hover:bg-white hover:text-[#1A1A1A]'
+          }`}
+          style="font-family: 'Space Mono', monospace;"
+        >
+          {categoryLabels[cat.slug] || cat.name}
+        </a>
+      ))}
+      <div class="border-t-2 border-gray-700 pt-2 mt-2">
+        <a
+          href="/contact"
+          class={`block px-4 py-3 text-sm font-bold uppercase tracking-wide border-2 transition-colors ${
+            currentPath === '/contact'
+              ? 'bg-[#E8FF00] text-[#1A1A1A] border-[#E8FF00]'
+              : 'text-white border-transparent hover:border-white hover:bg-white hover:text-[#1A1A1A]'
+          }`}
+          style="font-family: 'Space Mono', monospace;"
+        >
+          Contact
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('icon-open');
+  const iconClose = document.getElementById('icon-close');
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = !menu?.classList.contains('hidden');
+    menu?.classList.toggle('hidden', isOpen);
+    iconOpen?.classList.toggle('hidden', !isOpen);
+    iconClose?.classList.toggle('hidden', isOpen);
+    toggle.setAttribute('aria-expanded', String(!isOpen));
+  });
+</script>

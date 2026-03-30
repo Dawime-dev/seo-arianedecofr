@@ -1,0 +1,286 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import config from '../../site.config.json';
+
+const allArticles = await getCollection('articles');
+
+const categoriesWithArticles = config.categories.map((cat) => {
+  const articles = allArticles
+    .filter((a) => a.data.category === cat.slug)
+    .sort((a, b) => new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime())
+    .slice(0, 5);
+  return { ...cat, articles };
+});
+
+const recentArticles = allArticles
+  .sort((a, b) => new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime())
+  .slice(0, 3);
+---
+
+<BaseLayout
+  title={`${config.name} — ${config.description}`}
+  description={config.description}
+>
+
+  <!-- HERO -->
+  <section class="bg-[#1A1A1A] border-b-4 border-black">
+    <div class="max-w-6xl mx-auto px-4 py-16 md:py-24">
+      <div class="border-4 border-white p-6 md:p-12 inline-block w-full">
+        <p class="font-mono text-xs md:text-sm text-gray-400 uppercase tracking-widest mb-4">// arianedeco.fr</p>
+        <h1 class="font-mono font-bold text-4xl md:text-6xl lg:text-7xl text-white leading-none uppercase mb-6">
+          Béton<span class="text-gray-400">Brut</span><br />Maison
+        </h1>
+        <p class="text-gray-300 text-lg md:text-xl font-sans max-w-2xl leading-relaxed mb-8">
+          La maison, sans filtre. Des conseils bruts, des idées qui claquent, zéro superflu.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="#categories" class="bg-white text-black font-mono font-bold text-sm uppercase px-6 py-3 border-2 border-white hover:bg-black hover:text-white transition-colors">
+            Parcourir →
+          </a>
+          <a href="/contact" class="bg-transparent text-white font-mono font-bold text-sm uppercase px-6 py-3 border-2 border-white hover:bg-white hover:text-black transition-colors">
+            Contact
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DERNIERS ARTICLES -->
+  <section class="bg-gray-100 border-b-4 border-black">
+    <div class="max-w-6xl mx-auto px-4 py-12">
+      <div class="flex items-center gap-4 mb-8">
+        <span class="font-mono text-xs uppercase tracking-widest text-gray-500">// Récent</span>
+        <h2 class="font-mono font-bold text-2xl md:text-3xl uppercase text-black">À la une</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border-2 border-black">
+        {recentArticles.map((article, i) => (
+          <article class={`border-black ${i < recentArticles.length - 1 ? 'border-b-2 md:border-b-0 md:border-r-2' : ''}`}>
+            {article.data.image && (
+              <div class="overflow-hidden border-b-2 border-black">
+                <img
+                  src={article.data.image}
+                  alt={article.data.title}
+                  class="w-full h-48 object-cover grayscale hover:grayscale-0 transition-all duration-300"
+                  loading="lazy"
+                />
+              </div>
+            )}
+            <div class="p-5">
+              <span class="font-mono text-xs uppercase tracking-widest text-gray-500 block mb-2">
+                {config.categories.find(c => c.slug === article.data.category)?.name || article.data.category}
+              </span>
+              <h3 class="font-mono font-bold text-lg leading-tight mb-3 text-black">
+                <a href={`/${article.slug}`} class="hover:underline underline-offset-4">
+                  {article.data.title}
+                </a>
+              </h3>
+              <p class="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3">
+                {article.data.description}
+              </p>
+              <a href={`/${article.slug}`} class="font-mono text-xs uppercase font-bold border-b-2 border-black hover:bg-black hover:text-white px-2 py-1 transition-colors">
+                Lire →
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- MANIFESTE -->
+  <section class="bg-[#1A1A1A] border-b-4 border-black">
+    <div class="max-w-6xl mx-auto px-4 py-12 md:py-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-2 border-white">
+        <div class="border-b-2 md:border-b-0 md:border-r-2 border-white p-8 md:p-12">
+          <p class="font-mono text-xs uppercase tracking-widest text-gray-500 mb-4">// Notre approche</p>
+          <h2 class="font-mono font-bold text-3xl md:text-4xl text-white uppercase leading-tight mb-6">
+            Le brut,<br />c'est mieux
+          </h2>
+          <p class="text-gray-300 leading-relaxed">
+            Pas de photos irréelles. Pas de conseils inapplicables. Pas de langue de bois. Juste de l'information tranchée, claire et utile — comme un bon coup de marteau bien ajusté.
+          </p>
+        </div>
+        <div class="p-8 md:p-12">
+          <ul class="space-y-4">
+            <li class="flex items-start gap-4 border-b border-gray-700 pb-4">
+              <span class="font-mono font-bold text-2xl text-gray-600 leading-none">01</span>
+              <div>
+                <p class="font-mono font-bold text-white uppercase text-sm mb-1">Guides techniques directs</p>
+                <p class="text-gray-400 text-sm">Compris du premier coup, appliqués le jour même.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-4 border-b border-gray-700 pb-4">
+              <span class="font-mono font-bold text-2xl text-gray-600 leading-none">02</span>
+              <div>
+                <p class="font-mono font-bold text-white uppercase text-sm mb-1">Déco avec du caractère</p>
+                <p class="text-gray-400 text-sm">Des idées qui ont du sens, pas juste du style.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-4 border-b border-gray-700 pb-4">
+              <span class="font-mono font-bold text-2xl text-gray-600 leading-none">03</span>
+              <div>
+                <p class="font-mono font-bold text-white uppercase text-sm mb-1">Budget et contraintes réels</p>
+                <p class="text-gray-400 text-sm">On parle de votre maison, pas d'une villa de magazine.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-4">
+              <span class="font-mono font-bold text-2xl text-gray-600 leading-none">04</span>
+              <div>
+                <p class="font-mono font-bold text-white uppercase text-sm mb-1">D'égal à égal</p>
+                <p class="text-gray-400 text-sm">Débutant ou chevronné : même traitement, même respect.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES + ARTICLES -->
+  <section id="categories" class="bg-white">
+    <div class="max-w-6xl mx-auto px-4 py-12">
+
+      {categoriesWithArticles.map((cat, catIndex) => (
+        <div class={`mb-0 ${catIndex < categoriesWithArticles.length - 1 ? 'border-b-4 border-black mb-0' : ''}`}>
+
+          <!-- En-tête catégorie -->
+          <div class={`py-10 px-0 ${catIndex % 2 === 0 ? '' : ''}`}>
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+              <div>
+                <span class="font-mono text-xs uppercase tracking-widest text-gray-400 block mb-2">// Catégorie {catIndex + 1}</span>
+                <h2 class="font-mono font-bold text-3xl md:text-4xl uppercase text-black leading-none">
+                  {cat.name}
+                </h2>
+                <p class="text-gray-500 text-sm mt-2 max-w-xl">{cat.description}</p>
+              </div>
+              <a
+                href={`/categorie/${cat.slug}`}
+                class="font-mono text-xs uppercase font-bold border-2 border-black px-5 py-2 hover:bg-black hover:text-white transition-colors whitespace-nowrap self-start md:self-auto"
+              >
+                Tout voir →
+              </a>
+            </div>
+
+            <!-- Articles de la catégorie -->
+            {cat.articles.length > 0 ? (
+              <div class="border-2 border-black">
+                {/* Featured first article */}
+                {cat.articles[0] && (
+                  <article class="border-b-2 border-black">
+                    <div class="grid grid-cols-1 md:grid-cols-2">
+                      {cat.articles[0].data.image && (
+                        <div class="overflow-hidden border-b-2 md:border-b-0 md:border-r-2 border-black">
+                          <img
+                            src={cat.articles[0].data.image}
+                            alt={cat.articles[0].data.title}
+                            class="w-full h-56 md:h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
+                            loading="lazy"
+                          />
+                        </div>
+                      )}
+                      <div class="p-6 md:p-8 flex flex-col justify-between">
+                        <div>
+                          <span class="font-mono text-xs text-gray-400 uppercase tracking-widest block mb-3">// À la une</span>
+                          <h3 class="font-mono font-bold text-xl md:text-2xl leading-tight mb-4 text-black">
+                            <a href={`/${cat.articles[0].slug}`} class="hover:underline underline-offset-4">
+                              {cat.articles[0].data.title}
+                            </a>
+                          </h3>
+                          <p class="text-gray-600 leading-relaxed mb-6">
+                            {cat.articles[0].data.description}
+                          </p>
+                        </div>
+                        <div class="flex items-center justify-between">
+                          <a
+                            href={`/${cat.articles[0].slug}`}
+                            class="font-mono text-sm font-bold uppercase bg-black text-white px-5 py-2 hover:bg-gray-800 transition-colors"
+                          >
+                            Lire l'article →
+                          </a>
+                          {cat.articles[0].data.publishedDate && (
+                            <span class="font-mono text-xs text-gray-400">
+                              {new Date(cat.articles[0].data.publishedDate).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' })}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+                )}
+
+                {/* 4 autres articles */}
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+                  {cat.articles.slice(1).map((article, i) => (
+                    <article class={`border-black ${i < cat.articles.slice(1).length - 1 ? 'border-b-2 sm:border-b-0 sm:border-r-2' : ''} ${i === 1 ? 'lg:border-r-2' : ''}`}>
+                      {article.data.image && (
+                        <div class="overflow-hidden border-b-2 border-black">
+                          <img
+                            src={article.data.image}
+                            alt={article.data.title}
+                            class="w-full h-36 object-cover grayscale hover:grayscale-0 transition-all duration-300"
+                            loading="lazy"
+                          />
+                        </div>
+                      )}
+                      <div class="p-4">
+                        <h3 class="font-mono font-bold text-sm leading-tight mb-2 text-black">
+                          <a href={`/${article.slug}`} class="hover:underline underline-offset-4">
+                            {article.data.title}
+                          </a>
+                        </h3>
+                        <p class="text-gray-500 text-xs leading-relaxed mb-3 line-clamp-2">
+                          {article.data.description}
+                        </p>
+                        <a href={`/${article.slug}`} class="font-mono text-xs font-bold uppercase border-b border-black hover:text-gray-600 transition-colors">
+                          Lire →
+                        </a>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div class="border-2 border-black border-dashed p-8 text-center">
+                <p class="font-mono text-gray-400 text-sm">// Aucun article dans cette catégorie</p>
+              </div>
+            )}
+          </div>
+
+          {/* Séparateur entre catégories */}
+          {catIndex < categoriesWithArticles.length - 1 && (
+            <div class="py-8 border-t-4 border-b-4 border-black bg-[#1A1A1A] -mx-4 px-4 mb-0">
+              <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="font-mono text-white text-sm uppercase tracking-widest">
+                  // {categoriesWithArticles[catIndex + 1]?.name} arrive
+                </p>
+                <span class="font-mono text-gray-600 text-xs hidden md:block">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+                <p class="font-mono text-gray-400 text-xs uppercase">arianedeco.fr</p>
+              </div>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="bg-[#1A1A1A] border-t-4 border-black">
+    <div class="max-w-6xl mx-auto px-4 py-16 text-center">
+      <p class="font-mono text-xs uppercase tracking-widest text-gray-500 mb-4">// Des questions ?</p>
+      <h2 class="font-mono font-bold text-3xl md:text-4xl text-white uppercase mb-6">
+        On est là.
+      </h2>
+      <p class="text-gray-400 max-w-lg mx-auto mb-8">
+        Un projet, une interrogation, un sujet que vous voudriez qu'on traite ? Contactez-nous sans détour.
+      </p>
+      <a
+        href="/contact"
+        class="inline-block font-mono font-bold text-sm uppercase bg-white text-black px-8 py-4 border-2 border-white hover:bg-black hover:text-white transition-colors"
+      >
+        Nous contacter →
+      </a>
+    </div>
+  </section>
+
+</BaseLayout>

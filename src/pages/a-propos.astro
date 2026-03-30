@@ -1,0 +1,139 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import siteConfig from '../../site.config.json';
+---
+
+<BaseLayout
+  title={`À propos — ${siteConfig.name}`}
+  description="BétonBrut Maison : le site de décoration, bricolage et aménagement qui dit les choses comme elles sont. Conseils directs, honnêtes et applicables."
+>
+
+  <!-- Header -->
+  <header class="bg-[#1A1A1A] border-b-4 border-black">
+    <div class="max-w-4xl mx-auto px-4 py-12 md:py-20">
+      <nav class="font-mono text-xs text-gray-500 uppercase tracking-wide flex items-center gap-2 mb-8">
+        <a href="/" class="hover:text-white transition-colors">Accueil</a>
+        <span>/</span>
+        <span class="text-gray-300">À propos</span>
+      </nav>
+      <p class="font-mono text-xs uppercase tracking-widest text-gray-500 mb-4">// À propos</p>
+      <h1 class="font-mono font-bold text-4xl md:text-6xl text-white uppercase leading-none">
+        Le site qui dit<br /><span class="text-gray-400">les choses</span><br />comme elles sont
+      </h1>
+    </div>
+  </header>
+
+  <!-- Contenu -->
+  <div class="bg-white border-b-4 border-black">
+    <div class="max-w-4xl mx-auto px-4 py-12 md:py-16">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-0">
+
+        <!-- Corps principal -->
+        <div class="lg:col-span-2 lg:border-r-2 border-black lg:pr-12">
+
+          <div class="mb-10">
+            <h2 class="font-mono font-bold text-2xl md:text-3xl uppercase text-black border-b-2 border-black pb-3 mb-6">
+              BétonBrut Maison : le site qui dit les choses comme elles sont
+            </h2>
+            <p class="text-gray-700 leading-relaxed mb-4">
+              Bienvenue sur <strong class="text-black font-bold">BétonBrut Maison</strong>, le site qui refuse le vernis. Ici, pas de mise en scène inutile, pas de langue de bois : vous trouvez des conseils <strong class="text-black font-bold">directs, honnêtes et immédiatement applicables</strong> pour votre maison, votre déco et vos travaux.
+            </p>
+          </div>
+
+          <div class="mb-10">
+            <h2 class="font-mono font-bold text-2xl md:text-3xl uppercase text-black border-b-2 border-black pb-3 mb-6">
+              Pourquoi ce site existe
+            </h2>
+            <p class="text-gray-700 leading-relaxed">
+              Trop de sites déco et bricolage noient l'essentiel sous des couches de jargon, de photos irréelles et de conseils inapplicables. <strong class="text-black font-bold">BétonBrut Maison est né d'une frustration simple</strong> : trouver enfin un endroit où l'information est tranchée, claire et utile — comme un bon coup de marteau bien ajusté.
+            </p>
+          </div>
+
+          <div class="mb-10">
+            <h2 class="font-mono font-bold text-2xl md:text-3xl uppercase text-black border-b-2 border-black pb-3 mb-6">
+              Ce que vous trouverez ici
+            </h2>
+            <p class="text-gray-700 leading-relaxed mb-4">
+              Des guides de <strong class="text-black font-bold">bricolage et travaux</strong> rédigés pour être compris du premier coup. Des idées de <strong class="text-black font-bold">décoration intérieure</strong> qui ont du caractère. Des stratégies d'<strong class="text-black font-bold">aménagement et de rangement</strong> qui respectent votre budget et vos contraintes réelles. Et des conseils pour votre <strong class="text-black font-bold">jardin et vos espaces extérieurs</strong> avec la même franchise.
+            </p>
+          </div>
+
+          <div class="mb-10">
+            <h2 class="font-mono font-bold text-2xl md:text-3xl uppercase text-black border-b-2 border-black pb-3 mb-6">
+              Notre philosophie
+            </h2>
+            <p class="text-gray-700 leading-relaxed mb-4">
+              Le brutalisme n'est pas une laideur, c'est une <strong class="text-black font-bold">honnêteté formelle</strong>. On montre la structure, on assume les matières, on ne cache rien. C'est exactement comme ça qu'on aborde chaque sujet sur ce site : avec rigueur, impact et sans fioriture inutile.
+            </p>
+            <p class="text-gray-700 leading-relaxed">
+              Que vous soyez <strong class="text-black font-bold">propriétaire, locataire, débutant ou bricoleur chevronné</strong>, BétonBrut Maison vous parle d'égal à égal. Parce que votre maison mérite mieux que des conseils flous — elle mérite du solide.
+            </p>
+          </div>
+
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="lg:col-span-1 lg:pl-10 mt-10 lg:mt-0">
+          <div class="border-2 border-black mb-6">
+            <div class="bg-[#1A1A1A] p-4 border-b-2 border-black">
+              <p class="font-mono text-xs uppercase tracking-widest text-gray-400">// Catégories</p>
+            </div>
+            <ul class="divide-y-2 divide-black">
+              {siteConfig.categories.map(cat => (
+                <li>
+                  <a
+                    href={`/categorie/${cat.slug}`}
+                    class="block p-4 font-mono font-bold text-sm uppercase text-black hover:bg-black hover:text-white transition-colors"
+                  >
+                    {cat.name} →
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="border-2 border-black">
+            <div class="bg-[#1A1A1A] p-4 border-b-2 border-black">
+              <p class="font-mono text-xs uppercase tracking-widest text-gray-400">// Contact</p>
+            </div>
+            <div class="p-5">
+              <p class="text-gray-600 text-sm mb-4">Une question, une idée d'article ? On est à l'écoute.</p>
+              <a
+                href="/contact"
+                class="block font-mono font-bold text-sm uppercase text-center bg-black text-white px-4 py-3 hover:bg-gray-800 transition-colors"
+              >
+                Nous écrire →
+              </a>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats/valeurs -->
+  <section class="bg-gray-100 border-b-4 border-black">
+    <div class="max-w-4xl mx-auto px-4 py-12">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-0 border-2 border-black">
+        <div class="border-r-2 border-black p-6 text-center">
+          <p class="font-mono font-bold text-4xl text-black">4</p>
+          <p class="font-mono text-xs uppercase text-gray-500 mt-1">Catégories</p>
+        </div>
+        <div class="border-r-0 md:border-r-2 border-black p-6 text-center">
+          <p class="font-mono font-bold text-4xl text-black">0</p>
+          <p class="font-mono text-xs uppercase text-gray-500 mt-1">Jargon inutile</p>
+        </div>
+        <div class="border-t-2 md:border-t-0 border-r-2 border-black p-6 text-center">
+          <p class="font-mono font-bold text-4xl text-black">100%</p>
+          <p class="font-mono text-xs uppercase text-gray-500 mt-1">Applicable</p>
+        </div>
+        <div class="border-t-2 md:border-t-0 p-6 text-center">
+          <p class="font-mono font-bold text-4xl text-black">∞</p>
+          <p class="font-mono text-xs uppercase text-gray-500 mt-1">Franchise</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

@@ -1,0 +1,61 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SEOHead from '../components/SEOHead.astro';
+import '../styles/global.css';
+import siteConfig from '../../site.config.json';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  type?: string;
+  publishedDate?: string;
+  modifiedDate?: string;
+  author?: string;
+  category?: string;
+  slug?: string;
+}
+
+const {
+  title,
+  description = siteConfig.description,
+  image,
+  type = 'website',
+  publishedDate,
+  modifiedDate,
+  author,
+  category,
+  slug,
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <SEOHead
+      title={title}
+      description={description}
+      image={image}
+      type={type}
+      publishedDate={publishedDate}
+      modifiedDate={modifiedDate}
+      author={author}
+      category={category}
+      slug={slug}
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <Header />
+    <main class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

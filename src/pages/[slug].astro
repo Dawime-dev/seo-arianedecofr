@@ -1,0 +1,204 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import siteConfig from '../../site.config.json';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles');
+  return articles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+const { Content } = await article.render();
+
+const categoryInfo = siteConfig.categories.find(c => c.slug === article.data.category);
+
+const allArticles = await getCollection('articles');
+const relatedArticles = allArticles
+  .filter(a => a.slug !== article.slug && a.data.category === article.data.category)
+  .sort(() => Math.random() - 0.5)
+  .slice(0, 3);
+
+const publishedFormatted = article.data.publishedDate
+  ? new Date(article.data.publishedDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+  : null;
+---
+
+<BaseLayout
+  title={`${article.data.title} — ${siteConfig.name}`}
+  description={article.data.description}
+  image={article.data.image}
+  type="article"
+  publishedDate={article.data.publishedDate}
+  modifiedDate={article.data.modifiedDate}
+  author={article.data.author}
+  category={article.data.category}
+  slug={article.slug}
+>
+
+  <!-- Breadcrumb -->
+  <div class="bg-gray-100 border-b-2 border-black">
+    <div class="max-w-4xl mx-auto px-4 py-3">
+      <nav class="font-mono text-xs text-gray-500 uppercase tracking-wide flex flex-wrap items-center gap-2">
+        <a href="/" class="hover:text-black transition-colors">Accueil</a>
+        <span class="text-gray-400">/</span>
+        {categoryInfo && (
+          <>
+            <a href={`/categorie/${categoryInfo.slug}`} class="hover:text-black transition-colors">{categoryInfo.name}</a>
+            <span class="text-gray-400">/</span>
+          </>
+        )}
+        <span class="text-black truncate max-w-xs">{article.data.title}</span>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Header article -->
+  <header class="bg-[#1A1A1A] border-b-4 border-black">
+    <div class="max-w-4xl mx-auto px-4 py-10 md:py-16">
+      {categoryInfo && (
+        <a
+          href={`/categorie/${categoryInfo.slug}`}
+          class="inline-block font-mono text-xs uppercase tracking-widest text-gray-400 border border-gray-600 px-3 py-1 mb-6 hover:border-white hover:text-white transition-colors"
+        >
+          {categoryInfo.name}
+        </a>
+      )}
+      <h1 class="font-mono font-bold text-3xl md:text-5xl text-white leading-tight uppercase mb-6">
+        {article.data.title}
+      </h1>
+      {article.data.description && (
+        <p class="text-gray-300 text-lg leading-relaxed max-w-2xl mb-8">
+          {article.data.description}
+        </p>
+      )}
+      <div class="flex flex-wrap items-center gap-6 font-mono text-xs text-gray-500 border-t border-gray-700 pt-6">
+        {article.data.author && (
+          <span>Par <span class="text-gray-300 font-bold">{article.data.author}</span></span>
+        )}
+        {publishedFormatted && (
+          <span>Publié le <span class="text-gray-300">{publishedFormatted}</span></span>
+        )}
+        {article.data.readingTime && (
+          <span class="border border-gray-700 px-2 py-0.5">{article.data.readingTime} min de lecture</span>
+        )}
+      </div>
+    </div>
+  </header>
+
+  <!-- Image principale -->
+  {article.data.image && (
+    <div class="border-b-4 border-black overflow-hidden">
+      <img
+        src={article.data.image}
+        alt={article.data.title}
+        class="w-full max-h-[500px] object-cover"
+        loading="eager"
+      />
+    </div>
+  )}
+
+  <!-- Contenu -->
+  <div class="bg-white">
+    <div class="max-w-4xl mx-auto px-4 py-12 md:py-16">
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-0 lg:gap-12">
+
+        <!-- Article body -->
+        <article class="lg:col-span-3 prose-betonbrut">
+          <div class="
+            font-sans text-gray-800 leading-relaxed
+            [&>h2]:font-mono [&>h2]:font-bold [&>h2]:text-2xl [&>h2]:md:text-3xl [&>h2]:uppercase [&>h2]:text-black [&>h2]:mt-10 [&>h2]:mb-4 [&>h2]:pb-2 [&>h2]:border-b-2 [&>h2]:border-black
+            [&>h3]:font-mono [&>h3]:font-bold [&>h3]:text-xl [&>h3]:uppercase [&>h3]:text-black [&>h3]:mt-8 [&>h3]:mb-3
+            [&>h4]:font-mono [&>h4]:font-bold [&>h4]:text-lg [&>h4]:text-black [&>h4]:mt-6 [&>h4]:mb-2
+            [&>p]:mb-5 [&>p]:leading-relaxed [&>p]:text-gray-700
+            [&>ul]:mb-5 [&>ul]:pl-0 [&>ul>li]:border-l-4 [&>ul>li]:border-black [&>ul>li]:pl-4 [&>ul>li]:mb-2 [&>ul>li]:text-gray-700
+            [&>ol]:mb-5 [&>ol]:pl-0 [&>ol>li]:border-l-4 [&>ol>li]:border-black [&>ol>li]:pl-4 [&>ol>li]:mb-2 [&>ol>li]:text-gray-700
+            [&>blockquote]:border-l-4 [&>blockquote]:border-black [&>blockquote]:bg-gray-100 [&>blockquote]:px-6 [&>blockquote]:py-4 [&>blockquote]:my-6 [&>blockquote]:font-mono [&>blockquote]:font-bold [&>blockquote]:text-black
+            [&>a]:font-bold [&>a]:border-b-2 [&>a]:border-black [&>a]:hover:bg-black [&>a]:hover:text-white [&>a]:px-1
+            [&>strong]:font-bold [&>strong]:text-black
+            [&>img]:w-full [&>img]:border-2 [&>img]:border-black [&>img]:my-6
+            [&>code]:font-mono [&>code]:bg-gray-100 [&>code]:px-2 [&>code]:py-0.5 [&>code]:text-sm [&>code]:border [&>code]:border-gray-300
+            [&>pre]:bg-[#1A1A1A] [&>pre]:text-white [&>pre]:p-4 [&>pre]:font-mono [&>pre]:text-sm [&>pre]:overflow-x-auto [&>pre]:border-2 [&>pre]:border-black [&>pre]:my-6
+          ">
+            <Content />
+          </div>
+        </article>
+
+        <!-- Sidebar -->
+        <aside class="lg:col-span-1 mt-10 lg:mt-0">
+          <div class="sticky top-6 space-y-0 border-2 border-black">
+            <div class="bg-[#1A1A1A] p-4 border-b-2 border-black">
+              <p class="font-mono text-xs uppercase tracking-widest text-gray-400">// Navigation</p>
+            </div>
+            {categoryInfo && (
+              <div class="p-4 border-b-2 border-black">
+                <p class="font-mono text-xs uppercase text-gray-500 mb-2">Catégorie</p>
+                <a
+                  href={`/categorie/${categoryInfo.slug}`}
+                  class="font-mono font-bold text-sm text-black uppercase hover:underline block"
+                >
+                  {categoryInfo.name} →
+                </a>
+              </div>
+            )}
+            <div class="p-4 border-b-2 border-black">
+              <p class="font-mono text-xs uppercase text-gray-500 mb-2">Site</p>
+              <a href="/" class="font-mono text-sm text-black block mb-2 hover:underline">← Accueil</a>
+              <a href="/a-propos" class="font-mono text-sm text-black block hover:underline">À propos</a>
+            </div>
+            <div class="p-4">
+              <a
+                href="/contact"
+                class="block font-mono font-bold text-xs uppercase text-center bg-black text-white px-4 py-3 hover:bg-gray-800 transition-colors"
+              >
+                Contact →
+              </a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <!-- Articles liés -->
+  {relatedArticles.length > 0 && (
+    <section class="bg-gray-100 border-t-4 border-black">
+      <div class="max-w-4xl mx-auto px-4 py-12">
+        <div class="flex items-center gap-4 mb-8">
+          <span class="font-mono text-xs uppercase tracking-widest text-gray-500">// Suite</span>
+          <h2 class="font-mono font-bold text-2xl uppercase text-black">Sur le même thème</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border-2 border-black">
+          {relatedArticles.map((related, i) => (
+            <article class={`border-black ${i < relatedArticles.length - 1 ? 'border-b-2 md:border-b-0 md:border-r-2' : ''}`}>
+              {related.data.image && (
+                <div class="overflow-hidden border-b-2 border-black">
+                  <img
+                    src={related.data.image}
+                    alt={related.data.title}
+                    class="w-full h-36 object-cover grayscale hover:grayscale-0 transition-all duration-300"
+                    loading="lazy"
+                  />
+                </div>
+              )}
+              <div class="p-5">
+                <h3 class="font-mono font-bold text-sm leading-tight mb-3 text-black">
+                  <a href={`/${related.slug}`} class="hover:underline underline-offset-4">
+                    {related.data.title}
+                  </a>
+                </h3>
+                <a href={`/${related.slug}`} class="font-mono text-xs font-bold uppercase border-b border-black hover:text-gray-600 transition-colors">
+                  Lire →
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+</BaseLayout>
